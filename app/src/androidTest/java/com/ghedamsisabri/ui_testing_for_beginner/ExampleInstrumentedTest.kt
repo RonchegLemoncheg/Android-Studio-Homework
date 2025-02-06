@@ -33,8 +33,44 @@ class ExampleInstrumentedTest {
         Assert.assertEquals("SecondaryActivity", secondPageActivity.getText(5))
     }
 
+    @Test
+    fun checkNavigationToSecondPage() {
+        // 1. Check that the main page is loaded
+        mainPageText.isViewDisplayed()
+
+        // 2. click next button on the first page
+        NextBtn.tap()
+
+        // 3. Check second page
+
+        // ·  Second page text is on the screen
+        isTextOnScreen(secondPageActivity.getText())
+        // ·  Back button is on the screen
+        backButton.isViewDisplayed()
+    }
+
+    @Test
+    fun checkBackNavigationToMainPage() {
+        // 1 Check that the main page is loaded
+        mainPageText.isViewDisplayed()
+
+        // 2. click next button on the first page
+        NextBtn.tap()
+
+        // 3. go back with the back Button
+        backButton.tap()
+
+        // 4. Validate main page components
+        // ·  Main page text is on the screen
+        isTextOnScreen(mainPageText.getText())
+        // ·  The next button is on the screen
+        NextBtn.isViewDisplayed()
+    }
+
     companion object{
         val NextBtn: Matcher<View> by lazy { withId(R.id.button_next_activity) }
         val secondPageActivity: Matcher<View> by lazy { withId(R.id.activity_secondary_title) }
+        val backButton: Matcher<View> by lazy { withId(R.id.button_back) }
+        val mainPageText: Matcher<View> by lazy { withId(R.id.activity_main_title) }
     }
 }
